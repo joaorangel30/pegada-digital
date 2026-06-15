@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pegada Digital — Sustentabilidade no Mundo Eletrônico</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#0a0a0a;
+--surface:#111111;
+--surface2:#1a1a1a;
+--border:#2a2a2a;
+--muted:#555555;
+--secondary:#888888;
+--text:#e8e8e8;
+--white:#ffffff;
+--mono:'Space Mono',monospace;
+--sans:'Inter',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:var(--white);text-underline-offset:3px}
+a:hover{opacity:.7}
+.container{max-width:960px;margin:0 auto;padding:0 2rem}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,10,.92);border-bottom:1px solid var(--border);backdrop-filter:blur(8px)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:.9rem 2rem;max-width:960px;margin:0 auto}
+.nav-logo{font-family:var(--mono);font-size:.85rem;letter-spacing:.08em;color:var(--white);text-decoration:none}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:var(--secondary);transition:color .2s}
+.nav-links a:hover{color:var(--white)}
+
+section{padding:6rem 0}
+.section-label{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem;display:block}
+h1,h2,h3{font-family:var(--mono);font-weight:700;line-height:1.2}
+h2{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:1.5rem;color:var(--white)}
+h3{font-size:1.1rem;margin-bottom:.75rem;color:var(--white)}
+p{color:var(--text);margin-bottom:1rem}
+.text-muted{color:var(--secondary)}
+.text-white{color:var(--white)}
+hr{border:none;border-top:1px solid var(--border);margin:0}
+
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 0 4rem;position:relative;overflow:hidden}
+.hero-eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:2.5rem}
+.hero-headline{font-family:var(--mono);font-size:clamp(2rem,5vw,3.6rem);line-height:1.1;color:var(--white);margin-bottom:3rem;max-width:800px}
+.hero-headline em{font-style:italic;color:var(--secondary)}
+.counter-block{border:1px solid var(--border);padding:2rem 2.5rem;margin-bottom:3rem;display:inline-block;background:var(--surface)}
+.counter-label{font-family:var(--mono);font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.counter-value{font-family:var(--mono);font-size:clamp(2rem,5vw,3.5rem);font-weight:700;color:var(--white);letter-spacing:-.02em;min-width:12ch;display:block}
+.counter-unit{font-family:var(--mono);font-size:.8rem;color:var(--secondary);margin-top:.25rem}
+.hero-note{font-size:.85rem;color:var(--muted);max-width:560px}
+.hero-note sup{font-size:.65rem}
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:.65rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;border:1px solid var(--border);margin:3rem 0}
+.stat-card{background:var(--surface);padding:2rem 1.5rem}
+.stat-number{font-family:var(--mono);font-size:2.2rem;font-weight:700;color:var(--white);line-height:1;margin-bottom:.5rem}
+.stat-desc{font-size:.85rem;color:var(--secondary);line-height:1.4}
+.stat-source{font-family:var(--mono);font-size:.6rem;color:var(--muted);margin-top:.75rem;letter-spacing:.05em}
+
+.data-row{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;margin:3rem 0}
+@media(max-width:640px){.data-row{grid-template-columns:1fr}}
+.data-row.reverse{direction:rtl}.data-row.reverse>*{direction:ltr}
+
+.bar-chart{padding:1.5rem;background:var(--surface);border:1px solid var(--border)}
+.bar-item{margin-bottom:1.25rem}
+.bar-item:last-child{margin-bottom:0}
+.bar-label{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.72rem;color:var(--secondary);margin-bottom:.35rem}
+.bar-label span:last-child{color:var(--white)}
+.bar-track{height:4px;background:var(--border);position:relative}
+.bar-fill{height:100%;background:var(--white);position:absolute;top:0;left:0;transition:width 1s ease}
+
+.blockquote{border-left:2px solid var(--white);padding:1.25rem 1.5rem;margin:2.5rem 0;background:var(--surface)}
+.blockquote p{font-family:var(--mono);font-size:.95rem;color:var(--white);margin:0 0 .5rem}
+.blockquote cite{font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+
+.timeline{border-left:1px solid var(--border);margin:2rem 0;padding-left:2rem}
+.timeline-item{position:relative;margin-bottom:2.5rem}
+.timeline-item::before{content:'';position:absolute;left:-2.4rem;top:.4rem;width:8px;height:8px;border:1px solid var(--white);background:var(--bg)}
+.timeline-year{font-family:var(--mono);font-size:.7rem;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;margin-bottom:.25rem}
+.timeline-text{font-size:.95rem;color:var(--text)}
+.timeline-number{font-family:var(--mono);font-size:1.3rem;font-weight:700;color:var(--white)}
+
+.practice-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;border:1px solid var(--border);margin:2rem 0}
+.practice-card{background:var(--surface);padding:1.75rem}
+.practice-icon{font-family:var(--mono);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;display:block}
+
+#calculator{background:var(--surface)}
+.calc-form{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem 3rem;margin:2.5rem 0}
+@media(max-width:640px){.calc-form{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:.5rem}
+.field label{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--secondary)}
+.field input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:2px;background:var(--border);outline:none;cursor:pointer}
+.field input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;background:var(--white);cursor:pointer}
+.field input[type=range]::-moz-range-thumb{width:14px;height:14px;background:var(--white);cursor:pointer;border:none}
+.field-val{font-family:var(--mono);font-size:.85rem;color:var(--white);text-align:right}
+.calc-result{border:1px solid var(--border);padding:2rem 2.5rem;margin-top:2rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2rem}
+.result-block .r-label{font-family:var(--mono);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem}
+.result-block .r-value{font-family:var(--mono);font-size:2rem;font-weight:700;color:var(--white);line-height:1}
+.result-block .r-unit{font-family:var(--mono);font-size:.7rem;color:var(--secondary);margin-top:.2rem}
+.result-block .r-equiv{font-size:.8rem;color:var(--secondary);margin-top:.5rem}
+
+.tips-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin:2rem 0}
+.tip-card{border:1px solid var(--border);padding:1.5rem}
+.tip-num{font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;color:var(--muted);margin-bottom:.75rem;display:block}
+
+#sources{padding:4rem 0;background:var(--surface)}
+.sources-list{list-style:none;counter-reset:src}
+.sources-list li{counter-increment:src;display:flex;gap:1rem;padding:.75rem 0;border-bottom:1px solid var(--border);font-size:.82rem;color:var(--secondary)}
+.sources-list li::before{content:counter(src,decimal-leading-zero);font-family:var(--mono);font-size:.65rem;color:var(--muted);min-width:2ch;flex-shrink:0;margin-top:.15rem}
+.sources-list a{color:var(--secondary)}
+.sources-list a:hover{color:var(--white)}
+
+footer{padding:2rem;text-align:center;border-top:1px solid var(--border)}
+footer p{font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+
+@media(max-width:768px){
+nav .nav-links{display:none}
+.hero-headline{font-size:clamp(1.6rem,6vw,2.4rem)}
+.counter-value{font-size:clamp(1.6rem,7vw,2.5rem)}
+section{padding:4rem 0}
+}
+</style>
+</head>
+<body>
+
+<nav>
+<div class="nav-inner">
+<a class="nav-logo" href="#">Pegada Digital</a>
+<ul class="nav-links">
+<li><a href="#problema">O Problema</a></li>
+<li><a href="#ia">IAs</a></li>
+<li><a href="#praticas">Práticas</a></li>
+<li><a href="#futuro">Futuro</a></li>
+<li><a href="#calculator">Calculadora</a></li>
+</ul>
+</div>
+</nav>
+
+<section id="hero">
+<div class="container">
+<p class="hero-eyebrow">Projeto de Extensão — Sustentabilidade Digital</p>
+<h1 class="hero-headline">A internet consome o planeta<br><em>em silêncio.</em></h1>
+<div class="counter-block">
+<p class="counter-label">CO₂ emitido pela internet desde que você abriu esta página</p>
+<span class="counter-value" id="counter">0,000</span>
+<p class="counter-unit">toneladas de CO₂ · taxa: ~43 t/segundo</p>
+</div>
+<p class="hero-note">A internet é responsável por aproximadamente 3,7% das emissões globais de gases de efeito estufa — percentual comparável à aviação civil. Com a explosão das inteligências artificiais, esse número só cresce.<sup>[1,2]</sup></p>
+<p class="scroll-hint">↓ role para ver os dados</p>
+</div>
+</section>
+
+<hr>
+
+<section id="problema">
+<div class="container">
+<span class="section-label">O Custo Invisível</span>
+<h2>O mundo digital tem uma fatura energética enorme</h2>
+<p>Cada clique, cada busca, cada vídeo assistido e cada mensagem enviada consome energia. Data centers, redes de telecomunicação e os bilhões de dispositivos conectados formam uma infraestrutura que demanda eletricidade ininterruptamente — a maior parte ainda proveniente de fontes fósseis.</p>
+
+<div class="stat-grid">
+<div class="stat-card">
+<div class="stat-number">200–250</div>
+<div class="stat-desc">TWh/ano consumidos por data centers globais em 2022</div>
+<div class="stat-source">Fonte: IEA, Data Centres and Data Transmission Networks, 2023</div>
+</div>
+<div class="stat-card">
+<div class="stat-number">3,7%</div>
+<div class="stat-desc">das emissões globais de GEE atribuídas à internet e seus dispositivos</div>
+<div class="stat-source">Fonte: The Shift Project, Lean ICT Report, 2019</div>
+</div>
+<div class="stat-card">
+<div class="stat-number">57,4 Mt</div>
+<div class="stat-desc">de lixo eletrônico gerado em 2021 — o equivalente a 5.000 Torres Eiffel</div>
+<div class="stat-source">Fonte: Global E-waste Monitor, 2022</div>
+</div>
+<div class="stat-card">
+<div class="stat-number">1,8%</div>
+<div class="stat-desc">do consumo elétrico global vem só de redes de transmissão de dados</div>
+<div class="stat-source">Fonte: IEA, 2023</div>
+</div>
+</div>
+
+<div class="data-row">
+<div>
+<h3>Consumo elétrico comparado</h3>
+<p style="font-size:.9rem">Para contextualizar o impacto, veja como o consumo de setores digitais se compara a países inteiros:</p>
+<p style="font-size:.82rem;color:var(--secondary)">Em TWh/ano (estimativas 2022–2023)</p>
+</div>
+<div class="bar-chart">
+<div class="bar-item">
+<div class="bar-label"><span>Bitcoin</span><span>~150 TWh</span></div>
+<div class="bar-track"><div class="bar-fill" style="width:61%" data-w="61"></div></div>
+</div>
+<div class="bar-item">
+<div class="bar-label"><span>Streaming global</span><span>~100 TWh</span></div>
+<div class="bar-track"><div class="bar-fill" style="width:41%" data-w="41"></div></div>
+</div>
+<div class="bar-item">
+<div class="bar-label"><span>IA generativa (2024)</span><span>~90 TWh</span></div>
+<div class="bar-track"><div class="bar-fill" style="width:37%" data-w="37"></div></div>
+</div>
+<div class="bar-item">
+<div class="bar-label"><span>Toda a Argentina</span><span>~130 TWh</span></div>
+<div class="bar-track"><div class="bar-fill" style="width:53%" data-w="53"></div></div>
+</div>
+<div class="bar-item">
+<div class="bar-label"><span>Todo o Brasil</span><span>~600 TWh</span></div>
+<div class="bar-track"><div class="bar-fill" style="width:100%" data-w="100"></div></div>
+</div>
+<p style="font-family:var(--mono);font-size:.58rem;color:var(--muted);margin-top:1rem">Fontes: Cambridge CBEI 2024; IEA 2023; Goldman Sachs 2023</p>
+</div>
+</div>
+
+<div class="blockquote">
+<p>"A indústria de TIC é responsável por uma pegada de carbono equivalente à da aviação. E, ao contrário da aviação, está crescendo exponencialmente."</p>
+<cite>— Frédéric Bordage, pesquisador de ecodesign digital, GreenIT.fr</cite>
+</div>
+</div>
+</section>
+
+<hr>
+
+<section id="ia">
+<div class="container">
+<span class="section-label">Inteligências Artificiais</span>
+<h2>A IA generativa: o maior salto de consumo energético desde a nuvem</h2>
+<p>Modelos de linguagem como GPT-4, Gemini e Claude exigem infraestrutura massiva tanto para treinamento quanto para inferência. Cada resposta gerada consome energia de forma significativamente superior a tecnologias anteriores.</p>
+
+<div class="stat-grid">
+<div class="stat-card">
+<div class="stat-number">552 t</div>
+<div class="stat-desc">CO₂ emitido no treinamento do GPT-3 — equivalente a 123 carros rodando por um ano</div>
+<div class="stat-source">Fonte: Patterson et al., Carbon and the Cloud, Google/UC Berkeley, 2021</div>
+</div>
+<div class="stat-card">
+<div class="stat-number">10×</div>
+<div class="stat-desc">mais energia por consulta que uma busca no Google — uma query de IA consome ~3 Wh vs. ~0,3 Wh</div>
+<div class="stat-source">Fonte: Goldman Sachs Research, AI's Rising Power Demand, 2023</div>
+</div>
+<div class="stat-card">
+<div class="stat-number">+29%</div>
+<div class="stat-desc">de aumento nas emissões de carbono da Microsoft entre 2020 e 2023, atribuído ao crescimento de IA</div>
+<div class="stat-source">Fonte: Microsoft Sustainability Report, 2024</div>
+</div>
+<div class="stat-card">
+<div class="stat-number">5,6 bi</div>
+<div class="stat-desc">galões de água consumidos por data centers do Google em 2022 — alta de 21% em relação a 2021</div>
+<div class="stat-source">Fonte: Google Environmental Report, 2023</div>
+</div>
+</div>
+
+<div class="data-row reverse" style="margin-top:3rem">
+<div>
+<h3>O paradoxo da IA "verde"</h3>
+<p>Grandes empresas de tecnologia prometem neutralidade de carbono enquanto suas emissões reais crescem. O Google, que prometeu ser carbono neutro até 2030, viu suas emissões totais aumentarem 48% entre 2019 e 2023 — impulsionadas principalmente pela demanda de IA.<sup>[7]</sup></p>
+<p>Além do CO₂, há o problema da água. Sistemas de resfriamento de data centers consomem bilhões de litros de água potável — um recurso escasso em muitas regiões onde esses centros estão instalados.</p>
+<p style="font-size:.82rem;color:var(--secondary)">Um único treinamento de modelo de grande escala pode consumir tanto CO₂ quanto 5 carros ao longo de toda sua vida útil.<sup>[5]</sup></p>
+</div>
+<div>
+<div class="bar-chart">
+<p style="font-family:var(--mono);font-size:.65rem;color:var(--muted);margin-bottom:1.25rem;letter-spacing:.1em;text-transform:uppercase">CO₂ por tarefa computacional</p>
+<div class="bar-item">
+<div class="bar-label"><span>Treinar GPT-3</span><span>552 t CO₂</span></div>
+<div class="bar-track"><div class="bar-fill" style="width:100%" data-w="100"></div></div>
+</div>
+<div class="bar-item">
+<div class="bar-label"><span>Treinar BERT (NLP)</span><span>284 t CO₂</span></div>
+<div class="bar-track"><div class="bar-fill" style="width:51%" data-w="51"></div></div>
+</div>
+<div class="bar-item">
+<div class="bar-label"><span>1 voo NY–SF (ida)</span><span>~0,9 t CO₂</span></div>
+<div class="bar-track"><div class="bar-fill" style="width:0.2%" data-w="0.2"></div></div>
+</div>
+<div class="bar-item">
+<div class="bar-label"><span>1 carro/ano</span><span>~4,6 t CO₂</span></div>
+<div class="bar-track"><div class="bar-fill" style="width:0.8%" data-w="0.8"></div></div>
+</div>
+<p style="font-family:var(--mono);font-size:.58rem;color:var(--muted);margin-top:1rem">Fontes: Patterson et al. 2021; Strubell et al. 2019; EPA 2023</p>
+</div>
+</div>
+</div>
+
+<div class="blockquote">
+<p>"Se a IA fosse um país, já estaria entre os maiores consumidores de eletricidade do mundo. E está apenas começando."</p>
+<cite>— IEA, Electricity 2024: Analysis and Forecast to 2026</cite>
+</div>
+</div>
+</section>
+
+<hr>
+
+<section id="praticas">
+<div class="container">
+<span class="section-label">Outras Práticas Não Sustentáveis</span>
+<h2>O digital polui de outras formas além da IA</h2>
+<p>A crise energética digital vai além das IAs. Diversas práticas cotidianas no mundo eletrônico têm impactos silenciosos e acumulativos.</p>
+
+<div class="practice-grid">
+<div class="practice-card">
+<span class="practice-icon">⬡ Streaming</span>
+<h3>Vídeo sob demanda</h3>
+<p style="font-size:.88rem">O streaming representa ~1% das emissões globais de CO₂. Assistir em 4K consome até 4x mais energia que em HD. A demanda por vídeo online cresceu 80% durante a pandemia e nunca voltou ao patamar anterior.</p>
+<p style="font-family:var(--mono);font-size:.62rem;color:var(--muted)">Fonte: Carbon Trust / The Shift Project, 2021</p>
+</div>
+<div class="practice-card">
+<span class="practice-icon">⬡ Criptomoedas</span>
+<h3>Mineração de Bitcoin</h3>
+<p style="font-size:.88rem">O Bitcoin consome ~150 TWh/ano — mais que a Argentina inteira. Cada transação em Bitcoin emite em média 707 kg de CO₂. O mecanismo de prova de trabalho (Proof of Work) é intrinsecamente antienergético por design.</p>
+<p style="font-family:var(--mono);font-size:.62rem;color:var(--muted)">Fonte: Cambridge Bitcoin Electricity Consumption Index, 2024</p>
+</div>
+<div class="practice-card">
+<span class="practice-icon">⬡ E-waste</span>
+<h3>Lixo eletrônico</h3>
+<p style="font-size:.88rem">57,4 milhões de toneladas de lixo eletrônico em 2021. Apenas 17,4% foi reciclado adequadamente. Os demais liberam chumbo, mercúrio e cádmio no solo e na água. A cultura do descarte rápido de dispositivos alimenta essa crise.</p>
+<p style="font-family:var(--mono);font-size:.62rem;color:var(--muted)">Fonte: Global E-waste Monitor, 2022</p>
+</div>
+<div class="practice-card">
+<span class="practice-icon">⬡ E-mail</span>
+<h3>Comunicação digital</h3>
+<p style="font-size:.88rem">Um e-mail com anexo emite cerca de 50g de CO₂. São 300 bilhões de e-mails enviados por dia no mundo. Newsletters não lidas, spam e correntes acumulam uma pegada silenciosa e evitável.</p>
+<p style="font-family:var(--mono);font-size:.62rem;color:var(--muted)">Fonte: Mike Berners-Lee, How Bad Are Bananas?, 2010 / atualizado 2020</p>
+</div>
+<div class="practice-card">
+<span class="practice-icon">⬡ Cloud Storage</span>
+<h3>Armazenamento em nuvem</h3>
+<p style="font-size:.88rem">Fotos duplicadas, backups esquecidos e arquivos que nunca serão acessados vivem em servidores que funcionam 24/7. Estima-se que mais de 70% dos dados armazenados na nuvem empresarial nunca são reutilizados.</p>
+<p style="font-family:var(--mono);font-size:.62rem;color:var(--muted)">Fonte: IDC Data Age 2025 report; Veritas Technologies, 2020</p>
+</div>
+<div class="practice-card">
+<span class="practice-icon">⬡ Gaming</span>
+<h3>Games e metaverso</h3>
+<p style="font-size:.88rem">Consoles de última geração consomem até 200W em uso intenso. O metaverso e experiências de realidade virtual/aumentada demandam processamento massivo. A indústria de games emite mais de 5 milhões de toneladas de CO₂/ano.</p>
+<p style="font-family:var(--mono);font-size:.62rem;color:var(--muted)">Fonte: Playing for the Planet Alliance / IGDA, 2023</p>
+</div>
+</div>
+</div>
+</section>
+
+<hr>
+
+<section id="futuro">
+<div class="container">
+<span class="section-label">Projeções 2025–2050</span>
+<h2>O futuro, se nada mudar</h2>
+<p>As tendências atuais apontam para um crescimento exponencial do consumo energético digital. Os próximos anos serão críticos para definir se a tecnologia será parte da solução — ou a causa de uma crise irreversível.</p>
+
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-year">2025 — Agora</div>
+<div class="timeline-number">~500 TWh/ano</div>
+<div class="timeline-text">Consumo estimado de data centers globais. A IA generativa começa a representar fatia significativa desta demanda.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-year">2026</div>
+<div class="timeline-number">+80% de demanda elétrica por IA</div>
+<div class="timeline-text">Projeção de crescimento de consumo de eletricidade para IA entre 2024 e 2026, segundo a IEA. Data centers de IA podem superar 1.000 TWh nesse período.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-year">2030</div>
+<div class="timeline-number">8% da eletricidade global</div>
+<div class="timeline-text">Projeção de participação de data centers no consumo elétrico mundial. Empresas como Goldman Sachs estimam que a demanda de IA sozinha pode adicionar o equivalente ao consumo de toda a Alemanha à grade energética global.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-year">2030 — E-waste</div>
+<div class="timeline-number">74 Mt de lixo eletrônico</div>
+<div class="timeline-text">Volume projetado de resíduos eletrônicos globais, caso o crescimento atual continue. O problema atinge desproporcionalmente países em desenvolvimento, que recebem lixo eletrônico ilegal do Norte Global.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-year">2040</div>
+<div class="timeline-number">14% das emissões globais</div>
+<div class="timeline-text">Projeção do setor de TIC como proporção das emissões globais de GEE, segundo cenário tendencial do The Shift Project — superando hoje a aviação, o transporte marítimo e parte da indústria.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-year">2050</div>
+<div class="timeline-number">Ponto de não retorno</div>
+<div class="timeline-text">Ano-limite do Acordo de Paris para neutralidade de carbono. Se o setor digital não reduzir radicalmente suas emissões, comprometerá as metas climáticas globais — não importa o que outros setores façam.</div>
+</div>
+</div>
+
+<div class="blockquote">
+<p>"Até 2030, os data centers de IA podem consumir mais eletricidade do que o Japão inteiro."</p>
+<cite>— Goldman Sachs Research, AI's Rising Power Demand, abril de 2023</cite>
+</div>
+</div>
+</section>
+
+<hr>
+
+<section id="calculator">
+<div class="container">
+<span class="section-label">Calculadora de Impacto</span>
+<h2>Calcule sua pegada de carbono digital</h2>
+<p>Ajuste os controles abaixo para refletir seus hábitos digitais. Os valores são calculados com base em fatores de emissão estabelecidos na literatura científica.</p>
+
+<div class="calc-form" id="calc-form">
+<div class="field">
+<label>Streaming de vídeo (HD) — horas/semana</label>
+<input type="range" id="s-stream" min="0" max="40" value="10" step="1">
+<div class="field-val"><span id="v-stream">10</span> h/sem</div>
+</div>
+<div class="field">
+<label>Videochamadas — horas/semana</label>
+<input type="range" id="s-video" min="0" max="40" value="5" step="1">
+<div class="field-val"><span id="v-video">5</span> h/sem</div>
+</div>
+<div class="field">
+<label>Consultas a IAs (ChatGPT, Gemini, etc.) — por dia</label>
+<input type="range" id="s-ai" min="0" max="100" value="20" step="1">
+<div class="field-val"><span id="v-ai">20</span> consultas/dia</div>
+</div>
+<div class="field">
+<label>E-mails enviados — por dia</label>
+<input type="range" id="s-email" min="0" max="200" value="30" step="1">
+<div class="field-val"><span id="v-email">30</span> e-mails/dia</div>
+</div>
+<div class="field">
+<label>Redes sociais — horas/dia</label>
+<input type="range" id="s-social" min="0" max="16" value="2" step="0.5">
+<div class="field-val"><span id="v-social">2</span> h/dia</div>
+</div>
+<div class="field">
+<label>Games online — horas/semana</label>
+<input type="range" id="s-game" min="0" max="40" value="5" step="1">
+<div class="field-val"><span id="v-game">5</span> h/sem</div>
+</div>
+</div>
+
+<div class="calc-result">
+<div class="result-block">
+<div class="r-label">Por mês</div>
+<div class="r-value" id="r-month">0,0</div>
+<div class="r-unit">kg CO₂</div>
+</div>
+<div class="result-block">
+<div class="r-label">Por ano</div>
+<div class="r-value" id="r-year">0,0</div>
+<div class="r-unit">kg CO₂</div>
+</div>
+<div class="result-block">
+<div class="r-label">Equivale a</div>
+<div class="r-value" id="r-equiv-val">—</div>
+<div class="r-unit" id="r-equiv-unit"></div>
+<div class="r-equiv" id="r-equiv-text"></div>
+</div>
+<div class="result-block">
+<div class="r-label">Principal fonte</div>
+<div class="r-value" style="font-size:1.1rem;line-height:1.3" id="r-top">—</div>
+<div class="r-unit" id="r-top-pct"></div>
+</div>
+</div>
+
+<p style="font-size:.75rem;color:var(--muted);margin-top:1rem;font-family:var(--mono)">
+Fatores utilizados: streaming HD 0,036 kg CO₂/h [Netflix LCA 2022]; videochamada 0,015 kg/h [Carbon Trust 2021]; consulta IA ~0,004 kg [Goldman Sachs/IEA 2023, 3Wh × fator médio 0,233 kgCO₂/kWh IPCC]; e-mail 0,007 kg/unidade [Berners-Lee 2020, média simples+anexo]; rede social 0,003 kg/h [The Shift Project 2019]; game online 0,016 kg/h [Lancaster University 2021].
+</p>
+</div>
+</section>
+
+<hr>
+
+<section id="acoes">
+<div class="container">
+<span class="section-label">O Que Podemos Fazer</span>
+<h2>Pequenas mudanças, impacto real</h2>
+<p>A crise da pegada digital exige mudanças sistêmicas — pressão por regulação e energias renováveis nos data centers. Mas hábitos individuais também somam, especialmente quando adotados em escala.</p>
+
+<div class="tips-grid">
+<div class="tip-card">
+<span class="tip-num">01 / Streaming</span>
+<h3>Reduza a qualidade de vídeo quando não necessário</h3>
+<p style="font-size:.88rem">Assistir em 720p em vez de 4K pode reduzir em até 86% a emissão por hora. Em dispositivos móveis, a diferença visual é imperceptível.</p>
+</div>
+<div class="tip-card">
+<span class="tip-num">02 / E-mail</span>
+<h3>Desinscreva-se de newsletters que não lê</h3>
+<p style="font-size:.88rem">Cada newsletter armazenada em servidor consome energia 24/7. Arquivos e-mails antigos desnecessários. Use menos "responder a todos".</p>
+</div>
+<div class="tip-card">
+<span class="tip-num">03 / Nuvem</span>
+<h3>Faça um detox digital periódico</h3>
+<p style="font-size:.88rem">Delete fotos duplicadas, backups antigos e arquivos esquecidos na nuvem. Prefira armazenamento local para dados que não precisam de sincronização.</p>
+</div>
+<div class="tip-card">
+<span class="tip-num">04 / Dispositivos</span>
+<h3>Prolongue a vida útil dos seus aparelhos</h3>
+<p style="font-size:.88rem">80% das emissões de um smartphone ocorrem na fabricação. Usar um dispositivo por mais 2 anos pode reduzir sua pegada de TI em até 40%.</p>
+</div>
+<div class="tip-card">
+<span class="tip-num">05 / IA</span>
+<h3>Use IA com intenção, não por hábito</h3>
+<p style="font-size:.88rem">Antes de gerar conteúdo com IA, avalie se uma busca simples ou seu próprio conhecimento não resolve. Prompts bem elaborados reduzem iterações e energia consumida.</p>
+</div>
+<div class="tip-card">
+<span class="tip-num">06 / Pressão coletiva</span>
+<h3>Exija transparência das big techs</h3>
+<p style="font-size:.88rem">Apoie regulações que obriguem divulgação de emissões de data centers. Prefira empresas com compromissos reais de 100% energia renovável verificáveis.</p>
+</div>
+</div>
+</div>
+</section>
+
+<hr>
+
+<section id="sources">
+<div class="container">
+<span class="section-label">Referências</span>
+<h2 style="font-size:1.3rem;margin-bottom:1.5rem">Fontes e leituras complementares</h2>
+<ol class="sources-list">
+<li><span>The Shift Project. <em>Lean ICT: Towards Digital Sobriety</em>. 2019. <a href="https://theshiftproject.org/en/lean-ict-our-new-report/" target="_blank">theshiftproject.org</a></span></li>
+<li><span>International Energy Agency (IEA). <em>Data Centres and Data Transmission Networks</em>. 2023. <a href="https://www.iea.org/energy-system/buildings/data-centres-and-data-transmission-networks" target="_blank">iea.org</a></span></li>
+<li><span>Goldman Sachs Research. <em>AI's Rising Power Demand: Bending the Energy Curve</em>. Abril de 2023.</span></li>
+<li><span>Patterson, D. et al. <em>Carbon and the Cloud</em>. Google / UC Berkeley. 2021. <a href="https://arxiv.org/abs/2104.10350" target="_blank">arxiv.org/abs/2104.10350</a></span></li>
+<li><span>Strubell, E., Ganesh, A., McCallum, A. <em>Energy and Policy Considerations for Deep Learning in NLP</em>. ACL 2019. <a href="https://arxiv.org/abs/1906.02629" target="_blank">arxiv.org/abs/1906.02629</a></span></li>
+<li><span>Forti V., Baldé C.P., Kuehr R., Bel G. <em>The Global E-waste Monitor 2022</em>. UNU/UNITAR. <a href="https://globalewaste.org" target="_blank">globalewaste.org</a></span></li>
+<li><span>Google. <em>Environmental Report 2023</em>. <a href="https://sustainability.google/reports/" target="_blank">sustainability.google</a></span></li>
+<li><span>Microsoft. <em>Environmental Sustainability Report 2024</em>. <a href="https://blogs.microsoft.com/on-the-issues/sustainability" target="_blank">microsoft.com</a></span></li>
+<li><span>Cambridge Centre for Alternative Finance. <em>Cambridge Bitcoin Electricity Consumption Index (CBECI)</em>. 2024. <a href="https://ccaf.io/cbnsi/cbeci" target="_blank">ccaf.io</a></span></li>
+<li><span>IEA. <em>Electricity 2024: Analysis and Forecast to 2026</em>. 2024. <a href="https://www.iea.org/reports/electricity-2024" target="_blank">iea.org</a></span></li>
+<li><span>Carbon Trust. <em>Carbon impact of video streaming</em>. 2021. <a href="https://www.carbontrust.com/resources/carbon-impact-of-video-streaming" target="_blank">carbontrust.com</a></span></li>
+<li><span>Berners-Lee, M. <em>How Bad Are Bananas? The Carbon Footprint of Everything</em>. 2nd ed. 2020. Profile Books.</span></li>
+</ol>
+</div>
+</section>
+
+<footer>
+<p>Pegada Digital · Projeto de Extensão · UNIPAR · Dados atualizados conforme literatura científica disponível · 2025</p>
+</footer>
+
+<script>
+(function(){
+const RATE=43.1;
+let t0=Date.now();
+function fmt(n){
+return n.toLocaleString('pt-BR',{minimumFractionDigits:3,maximumFractionDigits:3});
+}
+function tick(){
+let s=(Date.now()-t0)/1000;
+let v=s*RATE;
+document.getElementById('counter').textContent=fmt(v);
+requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+})();
+
+(function(){
+const sliders=[
+{id:'s-stream',vid:'v-stream',suffix:'h/sem'},
+{id:'s-video',vid:'v-video',suffix:'h/sem'},
+{id:'s-ai',vid:'v-ai',suffix:'consultas/dia'},
+{id:'s-email',vid:'v-email',suffix:'e-mails/dia'},
+{id:'s-social',vid:'v-social',suffix:'h/dia'},
+{id:'s-game',vid:'v-game',suffix:'h/sem'},
+];
+const FACTORS={
+stream:0.036,
+video:0.015,
+ai:0.004,
+email:0.007,
+social:0.003,
+game:0.016,
+};
+const LABELS={stream:'Streaming',video:'Videochamadas',ai:'Consultas a IA',email:'E-mails',social:'Redes sociais',game:'Games'};
+sliders.forEach(s=>{
+const el=document.getElementById(s.id);
+const vo=document.getElementById(s.vid);
+el.addEventListener('input',()=>{vo.textContent=el.value;calc();});
+});
+function calc(){
+const sv=parseFloat(document.getElementById('s-stream').value);
+const vv=parseFloat(document.getElementById('s-video').value);
+const av=parseFloat(document.getElementById('s-ai').value);
+const ev=parseFloat(document.getElementById('s-email').value);
+const sov=parseFloat(document.getElementById('s-social').value);
+const gv=parseFloat(document.getElementById('s-game').value);
+const monthly={
+stream:sv*4*FACTORS.stream,
+video:vv*4*FACTORS.video,
+ai:av*30*FACTORS.ai,
+email:ev*30*FACTORS.email,
+social:sov*30*FACTORS.social,
+game:gv*4*FACTORS.game,
+};
+const total=Object.values(monthly).reduce((a,b)=>a+b,0);
+const yearly=total*12;
+document.getElementById('r-month').textContent=total.toFixed(2).replace('.',',');
+document.getElementById('r-year').textContent=yearly.toFixed(1).replace('.',',');
+const top=Object.entries(monthly).sort((a,b)=>b[1]-a[1])[0];
+document.getElementById('r-top').textContent=LABELS[top[0]];
+const pct=total>0?Math.round(top[1]/total*100):0;
+document.getElementById('r-top-pct').textContent=pct+'% do total';
+if(yearly<1){
+document.getElementById('r-equiv-val').textContent=(yearly*1000).toFixed(0);
+document.getElementById('r-equiv-unit').textContent='g CO₂ / ano';
+document.getElementById('r-equiv-text').textContent='Emissão muito baixa';
+}else if(yearly<50){
+document.getElementById('r-equiv-val').textContent=(yearly/0.9).toFixed(0);
+document.getElementById('r-equiv-unit').textContent='km de carro';
+document.getElementById('r-equiv-text').textContent='equivalente dirigido por ano';
+}else if(yearly<500){
+document.getElementById('r-equiv-val').textContent=(yearly/0.255).toFixed(0);
+document.getElementById('r-equiv-unit').textContent='árvores/ano';
+document.getElementById('r-equiv-text').textContent='necessárias para compensar';
+}else{
+document.getElementById('r-equiv-val').textContent=(yearly/900).toFixed(1).replace('.',',');
+document.getElementById('r-equiv-unit').textContent='voos ida NY→SP';
+document.getElementById('r-equiv-text').textContent='equivalentes por ano';
+}
+}
+calc();
+})();
+</script>
+</body>
+</html>
